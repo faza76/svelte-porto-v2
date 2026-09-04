@@ -147,6 +147,46 @@ export const projects = [
     links: [{ label: 'View Source on GitHub', href: 'https://github.com/dkessler-dev/streamworks', primary: true }]
   },
   {
+    slug: 'yardpullsim',
+    title: 'YardPullSim',
+    type: 'open-source',
+    href: 'https://github.com/dkessler-dev/yardpullsim',
+    subtitle: 'Module pulling sequence optimization for container yards',
+    description:
+      'A constraint-based simulation engine that uses Google OR Tools CP-SAT solver to generate ' +
+      'optimal module-pulling sequences in container yards. Models yard layout, crane travel, and ' +
+      'precedence constraints to minimize total handling time and reduce unproductive rehandles.',
+    technologies: ['python', 'google or-tools', 'cp-sat', 'svelte'],
+    links: [{ label: 'GitHub', href: 'https://github.com/dkessler-dev/yardpullsim', primary: true }]
+  },
+  {
+    slug: 'transitarranger',
+    title: 'TransitArranger',
+    type: 'open-source',
+    href: 'https://github.com/dkessler-dev/transitarranger',
+    subtitle: 'Module staging optimization from transit area to mother container',
+    description:
+      'An optimization tool that arranges modules from a transit staging area into a mother ' +
+      'container using Google OR Tools CP-SAT. Solves a complex packing and sequencing problem ' +
+      'where module weight, arrival order, and container slot constraints must all be satisfied ' +
+      'simultaneously.',
+    technologies: ['python', 'google or-tools', 'cp-sat', 'docker'],
+    links: [{ label: 'GitHub', href: 'https://github.com/dkessler-dev/transitarranger', primary: true }]
+  },
+  {
+    slug: 'iotyardmap',
+    title: 'IoTYardMap',
+    type: 'open-source',
+    href: 'https://github.com/dkessler-dev/iotyardmap',
+    subtitle: 'Real-time container mapping with IoT sensors and live dashboard',
+    description:
+      'An IoT-powered container yard mapping system that uses BLE/UWB beacons and RFID tags to ' +
+      'track container positions in real time, with a live dashboard showing yard occupancy, ' +
+      'container movement history, and heat maps of handling activity.',
+    technologies: ['python', 'mqtt', 'influxdb', 'svelte', 'docker'],
+    links: [{ label: 'GitHub', href: 'https://github.com/dkessler-dev/iotyardmap', primary: true }]
+  },
+  {
     slug: 'remoterounds',
     title: 'RemoteRounds',
     type: 'open-source',
