@@ -198,5 +198,20 @@ export const projects = [
       'live audio to structured documentation using Go, Flutter, and Kubernetes-backed services.',
     technologies: ['go', 'flutter', 'kubernetes'],
     links: [{ label: 'View Source on GitHub', href: 'https://github.com/dkessler-dev/remoterounds', primary: true }]
+  },
+  {
+    slug: 'containerflow',
+    title: 'ContainerFlow',
+    type: 'open-source',
+    href: 'https://github.com/faza76/ContainerFlow',
+    subtitle: 'Real-time container flow optimization for port and yard operations',
+    description:
+      'A real-time container flow optimization engine for port terminals and inland container yards. ' +
+      'Models container movement as a flow network with capacity constraints, tracks inventory across ' +
+      'multiple zones, and generates dispatch recommendations for quay and yard cranes to minimize ' +
+      'rehandles and reduce dwell time. Built on a CP-SAT core with a Rust + Svelte stack for low-latency ' +
+      'state synchronization.',
+    technologies: ['rust', 'svelte', 'cp-sat', 'postgres', 'nats jetstream', 'docker'],
+    links: [{ label: 'GitHub', href: 'https://github.com/faza76/ContainerFlow', primary: true }]
   }
 ];
