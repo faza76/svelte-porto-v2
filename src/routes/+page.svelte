@@ -1,5 +1,5 @@
 <script>
-  import SignalBackground from '$lib/components/SignalBackground.svelte';
+  import PcbBackground from '$lib/components/PcbBackground.svelte';
   import ProjectCard from '$lib/components/ProjectCard.svelte';
   import { profile } from '$lib/data/profile.js';
   import { projects } from '$lib/data/projects.js';
@@ -30,7 +30,7 @@
 
 <main class="page" id="top">
   <div class="signal-background">
-    <SignalBackground channels={10} height={750} bgColor="#0a0e12" accentColor="#36f2c2" />
+    <PcbBackground channels={10} height={750} bgColor="#0a0e12" accentColor="#36f2c2" />
   </div>
 
   <div class="shell">
