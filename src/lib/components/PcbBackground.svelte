@@ -30,6 +30,7 @@
   let chips = [];
   let traces = [];
   let gridLines = [];
+  let standaloneVias = [];
 
   // --- animated signals ---
   let signals = [];
@@ -61,12 +62,14 @@
   // PCB layout generation
   // ------------------------------------------------------------------
   function generateLayout(w, h) {
-    const chipCount = clamp(channels, 4, 16);
-    const margin = 50;
+    const margin = 20;
     const innerW = w - margin * 2;
     const innerH = h - margin * 2;
 
-    // 1. Place chips on a loose grid with jitter
+    // Chip count scales with board area — fill the space
+    const chipCount = Math.min(Math.max(Math.floor(Math.sqrt(w * h) / 35), 8), 40);
+
+    // 1. Place chips on a grid with jitter
     const cols = Math.ceil(Math.sqrt(chipCount * (innerW / innerH)));
     const rows = Math.ceil(chipCount / cols);
     const cellW = innerW / cols;
@@ -76,16 +79,16 @@
     let idx = 0;
     for (let r = 0; r < rows && idx < chipCount; r++) {
       for (let c = 0; c < cols && idx < chipCount; c++, idx++) {
-        const isBig = idx % 4 === 0; // every 4th chip is "big"
-        const chipW = isBig ? rand(65, 100) : rand(35, 55);
-        const chipH = isBig ? rand(50, 75) : rand(25, 40);
-        const cx = margin + c * cellW + cellW * 0.5 + rand(-cellW * 0.2, cellW * 0.2);
-        const cy = margin + r * cellH + cellH * 0.5 + rand(-cellH * 0.2, cellH * 0.2);
+        const isBig = idx % 5 === 0;
+        const isMedium = idx % 3 === 0;
+        const chipW = isBig ? rand(60, 95) : isMedium ? rand(45, 60) : rand(28, 42);
+        const chipH = isBig ? rand(50, 75) : isMedium ? rand(35, 50) : rand(20, 32);
+        const cx = margin + c * cellW + cellW * 0.5 + rand(-cellW * 0.25, cellW * 0.25);
+        const cy = margin + r * cellH + cellH * 0.5 + rand(-cellH * 0.25, cellH * 0.25);
         const x = clamp(cx - chipW / 2, margin, w - margin - chipW);
         const y = clamp(cy - chipH / 2, margin, h - margin - chipH);
 
-        // pins: left and right side
-        const pinCount = isBig ? randInt(6, 10) : randInt(3, 5);
+        const pinCount = isBig ? randInt(8, 12) : randInt(3, 6);
         const leftPins = [];
         const rightPins = [];
         for (let p = 0; p < pinCount; p++) {
@@ -97,23 +100,23 @@
         newChips.push({
           x, y, w: chipW, h: chipH,
           leftPins, rightPins,
-          label: isBig ? ['CPU', 'MCU', 'NPU', 'FPGA', 'DSP'][randInt(0, 4)] : `U${idx + 1}`
+          label: isBig ? ['CPU', 'MCU', 'NPU', 'FPGA', 'DSP', 'AI'][randInt(0, 5)] : `U${idx + 1}`
         });
       }
     }
 
-    // 2. Route orthogonal traces between random pin pairs
+    // 2. Collect all pins
     const allPins = [];
     for (const chip of newChips) {
       for (const pin of chip.leftPins) allPins.push({ ...pin, chip });
       for (const pin of chip.rightPins) allPins.push({ ...pin, chip });
     }
 
-    const traceCount = Math.min(Math.floor(allPins.length * 0.6), 40);
+    // 3. Route orthogonal traces between random pin pairs
+    const traceCount = Math.min(Math.floor(allPins.length * 0.8), 120);
     const usedPins = new Set();
     const newTraces = [];
     for (let t = 0; t < traceCount; t++) {
-      // pick two distinct unused pins if possible, else any
       let aIdx, bIdx;
       const available = [];
       for (let i = 0; i < allPins.length; i++) {
@@ -134,28 +137,76 @@
       const a = allPins[aIdx];
       const b = allPins[bIdx];
 
-      // orthogonal path: horizontal from a, vertical, then horizontal to b
-      const midX = (a.x + b.x) / 2 + rand(-20, 20);
-      const waypoints = [
-        { x: Math.round(a.x), y: Math.round(a.y) },
-        { x: Math.round(midX), y: Math.round(a.y) },
-        { x: Math.round(midX), y: Math.round(b.y) },
-        { x: Math.round(b.x), y: Math.round(b.y) }
-      ];
-      newTraces.push({ waypoints });
+      // orthogonal path with 2-3 bend points
+      const useThreeBends = Math.random() < 0.3;
+      if (useThreeBends && Math.abs(a.x - b.x) > 80) {
+        const mid1 = a.x + (b.x - a.x) * 0.3 + rand(-15, 15);
+        const mid2 = a.x + (b.x - a.x) * 0.7 + rand(-15, 15);
+        const midY = (a.y + b.y) / 2 + rand(-30, 30);
+        newTraces.push({
+          waypoints: [
+            { x: Math.round(a.x), y: Math.round(a.y) },
+            { x: Math.round(mid1), y: Math.round(a.y) },
+            { x: Math.round(mid1), y: Math.round(midY) },
+            { x: Math.round(mid2), y: Math.round(midY) },
+            { x: Math.round(mid2), y: Math.round(b.y) },
+            { x: Math.round(b.x), y: Math.round(b.y) }
+          ]
+        });
+      } else {
+        const midX = (a.x + b.x) / 2 + rand(-25, 25);
+        newTraces.push({
+          waypoints: [
+            { x: Math.round(a.x), y: Math.round(a.y) },
+            { x: Math.round(midX), y: Math.round(a.y) },
+            { x: Math.round(midX), y: Math.round(b.y) },
+            { x: Math.round(b.x), y: Math.round(b.y) }
+          ]
+        });
+      }
     }
 
-    // 3. Subtle grid lines
+    // 4. Decorative traces — not connected to any pin, just fill
+    const decorTraceCount = Math.floor(Math.sqrt(w * h) / 80);
+    for (let i = 0; i < decorTraceCount; i++) {
+      const x1 = rand(margin, w - margin);
+      const y1 = rand(margin, h - margin);
+      const x2 = rand(margin, w - margin);
+      const y2 = rand(margin, h - margin);
+      const midX = (x1 + x2) / 2 + rand(-40, 40);
+      newTraces.push({
+        waypoints: [
+          { x: Math.round(x1), y: Math.round(y1) },
+          { x: Math.round(midX), y: Math.round(y1) },
+          { x: Math.round(midX), y: Math.round(y2) },
+          { x: Math.round(x2), y: Math.round(y2) }
+        ]
+      });
+    }
+
+    // 5. Standalone vias scattered around
+    const viaCount = Math.floor(Math.sqrt(w * h) / 18);
+    const newVias = [];
+    for (let i = 0; i < viaCount; i++) {
+      newVias.push({
+        x: rand(margin + 5, w - margin - 5),
+        y: rand(margin + 5, h - margin - 5),
+        r: rand(2, 4)
+      });
+    }
+
+    // 6. Subtle grid lines
     const newGridLines = [];
-    const gridSpacing = 60;
-    for (let x = margin % gridSpacing; x < w; x += gridSpacing) {
+    const gridSpacing = 50;
+    const gridOffset = margin - (margin % gridSpacing);
+    for (let x = gridOffset; x < w; x += gridSpacing) {
       newGridLines.push({ x1: x, y1: 0, x2: x, y2: h });
     }
-    for (let y = margin % gridSpacing; y < h; y += gridSpacing) {
+    for (let y = gridOffset; y < h; y += gridSpacing) {
       newGridLines.push({ x1: 0, y1: y, x2: w, y2: y });
     }
 
-    return { chips: newChips, traces: newTraces, gridLines: newGridLines };
+    return { chips: newChips, traces: newTraces, gridLines: newGridLines, standaloneVias: newVias };
   }
 
   // ------------------------------------------------------------------
@@ -258,6 +309,18 @@
       }
     }
 
+    // standalone vias
+    for (const via of standaloneVias) {
+      ctx.beginPath();
+      ctx.arc(via.x, via.y, via.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},0.2)`;
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(via.x, via.y, via.r * 0.4, 0, Math.PI * 2);
+      ctx.fillStyle = bgColor;
+      ctx.fill();
+    }
+
     // chips
     for (const chip of chips) {
       // body
@@ -274,6 +337,15 @@
         ctx.arc(pin.x, pin.y, 2, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${r},${g},${b},0.3)`;
         ctx.fill();
+      }
+
+      // silkscreen label
+      if (chip.w > 40 && chip.h > 20) {
+        ctx.font = `${Math.min(chip.w, chip.h) * 0.18}px monospace`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = `rgba(${r},${g},${b},0.25)`;
+        ctx.fillText(chip.label, chip.x + chip.w / 2, chip.y + chip.h / 2);
       }
     }
 
@@ -363,6 +435,7 @@
     chips = layout.chips;
     traces = layout.traces;
     gridLines = layout.gridLines;
+    standaloneVias = layout.standaloneVias;
     signals = [];
   }
 
