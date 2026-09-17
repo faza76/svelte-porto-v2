@@ -22,14 +22,14 @@
 <header class="site-header" class:site-header--scrolled={scrolled}>
   <div class="site-header__inner" class:site-header__inner--with-title={onBlog}>
     {#if onBlog}
-      <a class="site-header__title" href="/blog">daniel's blog</a>
+      <a class="site-header__title" href="/blog">faza's blog</a>
     {/if}
     <nav class="site-nav" aria-label="Primary">
       <ul>
         <li><a href="/">Projects</a></li>
         <li><a href="/about">About</a></li>
         <li><a href="/blog">Blog</a></li>
-        <li><a href="https://github.com/dkessler-dev" target="_blank" rel="external noreferrer">GitHub</a></li>
+        <li><a href="https://github.com/faza76" target="_blank" rel="external noreferrer">GitHub</a></li>
         <li><a href="/#contact">Contact</a></li>
       </ul>
     </nav>
