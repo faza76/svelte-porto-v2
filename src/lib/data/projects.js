@@ -1,197 +1,83 @@
 export const projects = [
   {
-    slug: 'medgateway',
-    title: 'MedGateway',
+    slug: 'containerflow',
+    title: 'ContainerFlow',
     type: 'open-source',
-    href: 'https://github.com/dkessler-dev/medgateway',
-    subtitle: 'Universal healthcare data interoperability engine',
+    href: 'https://github.com/faza76/containerflow',
+    subtitle: 'Container logistics tracking SPA',
     description:
-      'A real-time translation layer between HL7v2, FHIR, and the dozens of legacy hospital ' +
-      'system dialects still in production. An event-driven pipeline normalizes inbound messages ' +
-      'into a canonical clinical schema, so downstream systems only ever need to speak one format.',
-    technologies: ['rust', 'postgres', 'nats jetstream', 'kubernetes'],
-    links: [{ label: 'GitHub', href: 'https://github.com/dkessler-dev/medgateway', primary: true }]
+      'Track shipments end-to-end with live status and bulk CSV import. Role-based dashboards with ' +
+      'real-time WebSocket status updates, CSV bulk import with validation, audit log, and shipment ' +
+      'history timeline.',
+    technologies: ['react', 'typescript', 'prisma', 'postgresql', 'docker', 'websocket'],
+    links: [{ label: 'GitHub', href: 'https://github.com/faza76/containerflow', primary: true }]
   },
   {
-    slug: 'factorypulse',
-    title: 'FactoryPulse',
+    slug: 'svelte-porto-v2',
+    title: 'svelte-porto-v2',
     type: 'open-source',
-    href: 'https://github.com/dkessler-dev/factorypulse',
-    subtitle: 'Real-time OEE & sensor telemetry for the shop floor',
+    href: 'https://github.com/faza76/svelte-porto-v2',
+    subtitle: 'Markdown-driven portfolio with SvelteKit',
     description:
-      'A high-throughput ingestion and dashboarding platform for production-line telemetry. ' +
-      'MQTT-based sensor feeds are aggregated into rolling OEE (availability, performance, quality) ' +
-      'metrics with sub-second latency, so line supervisors see downtime as it happens, not in a ' +
-      'shift report the next morning.',
-    technologies: ['rust', 'timescaledb', 'mqtt', 'kubernetes', 'svelte'],
-    links: [{ label: 'GitHub', href: 'https://github.com/dkessler-dev/factorypulse', primary: true }]
+      'Component-driven portfolio site with a headless Markdown CMS pipeline. Content is compiled from ' +
+      '.md files at build time via MDsvex, with a component-driven design system and automated CI deploy to Vercel.',
+    technologies: ['sveltekit', 'mdsvex', 'typescript', 'tailwind', 'vercel'],
+    links: [{ label: 'GitHub', href: 'https://github.com/faza76/svelte-porto-v2', primary: true }]
   },
   {
-    slug: 'visionqc',
-    title: 'VisionQC',
+    slug: 'simple-portfolio-svelte',
+    title: 'simple-portfolio-svelte',
     type: 'open-source',
-    href: 'https://github.com/dkessler-dev/visionqc',
-    subtitle: 'Computer-vision defect detection for production lines',
+    href: 'https://github.com/faza76/simple-portfolio-svelte',
+    subtitle: 'Minimal SSG portfolio — zero JS by default',
     description:
-      'A camera-based inline quality control system trained on real defect datasets from injection ' +
-      'molding and PCB assembly lines. Runs inference at line speed on commodity edge hardware and ' +
-      'flags defective units before they reach packaging.',
-    technologies: ['python', 'pytorch', 'opencv', 'docker'],
-    links: [{ label: 'GitHub', href: 'https://github.com/dkessler-dev/visionqc', primary: true }]
+      'Fast, zero-JS-by-default portfolio built with SvelteKit SSG. Ships as static HTML to GitHub Pages or ' +
+      'Vercel. Achieves Lighthouse 98+ and serves as the template for the v2 portfolio.',
+    technologies: ['sveltekit', 'typescript', 'tailwind'],
+    links: [{ label: 'GitHub', href: 'https://github.com/faza76/simple-portfolio-svelte', primary: true }]
   },
   {
-    slug: 'caresync',
-    title: 'CareSync',
-    type: 'closed-source',
-    subtitle: 'Real-time clinical alerting across bedside devices',
-    description:
-      'An institution-scale monitoring and alerting platform that aggregates telemetry from bedside ' +
-      'vitals monitors, infusion pumps, and ventilators, and routes clinically-significant events to ' +
-      'the right care team over low-latency WebRTC channels — without adding another siloed app to ' +
-      "the nursing station's workflow.",
-    technologies: ['rust', 'webrtc', 'nats jetstream', 'postgres', 'kubernetes'],
-    note: 'Closed-source project — media, details, and demo available on request.',
-    links: []
-  },
-  {
-    slug: 'predictivemaint',
-    title: 'PredictiveMaint',
-    type: 'closed-source',
-    subtitle: 'Predicting equipment failure before it happens',
-    description:
-      'A predictive maintenance pipeline for industrial motors and pumps, trained on vibration and ' +
-      'thermal sensor streams. Deployed across three manufacturing sites, it has caught bearing ' +
-      'failures an average of 11 days before they would have caused unplanned downtime.',
-    technologies: ['python', 'tensorflow', 'kafka', 'docker'],
-    note: 'Closed-source project — media, details, and demo available on request.',
-    links: []
-  },
-  {
-    slug: 'traceline',
-    title: 'TraceLine',
+    slug: 'notion-dashboard-webhook',
+    title: 'NotionDashboard-WebHook',
     type: 'open-source',
-    href: 'https://github.com/dkessler-dev/traceline',
-    subtitle: 'Cryptographically verifiable production lineage tracking',
+    href: 'https://github.com/faza76/NotionDashboard-WebHook',
+    subtitle: 'C# Webhook bridge for Notion databases',
     description:
-      'A traceability engine for regulated manufacturing (medical devices, pharma packaging) where ' +
-      'every processing step is tagged with a cryptographically verifiable audit token. Gives full, ' +
-      'tamper-evident lineage from raw material lot to finished unit, ready for an FDA audit.',
-    technologies: ['rust', 'postgres', 'nats jetstream', 'kubernetes'],
-    links: [{ label: 'GitHub', href: 'https://github.com/dkessler-dev/traceline', primary: true }]
+      'Real-time Notion database webhook handler with event routing and signature-verified ingestion. ' +
+      'ASP.NET Core receiver dispatches Notion database change events to downstream consumers.',
+    technologies: ['csharp', 'dotnet', 'aspnetcore', 'docker'],
+    links: [{ label: 'GitHub', href: 'https://github.com/faza76/NotionDashboard-WebHook', primary: true }]
   },
   {
-    slug: 'openline-collective',
-    title: 'OpenLine Collective',
-    type: 'community / ecosystem',
-    href: 'https://openline.dev',
-    subtitle: 'Open-source lab for healthcare & manufacturing software',
-    description:
-      'A research and engineering community I founded to explore infrastructure that healthcare and ' +
-      'industrial software both need but nobody wants to build twice: interoperability, real-time ' +
-      'telemetry, and regulatory-grade audit trails. Now a community of 150+ engineers coordinating ' +
-      'projects on shared, enterprise-grade infrastructure.',
-    technologies: ['python', 'go', 'rust', 'postgres', 'kubernetes'],
-    links: [{ label: 'Visit Site', href: 'https://openline.dev', primary: true }]
-  },
-  {
-    slug: 'simulacra',
-    title: 'Simulacra',
+    slug: 'starter-fullstack-angular-dotnet',
+    title: 'starter-fullstack-angular-dotnet',
     type: 'open-source',
-    href: 'https://github.com/dkessler-dev/simulacra',
-    subtitle: 'Digital twin simulator for wards and production cells',
+    href: 'https://github.com/faza76/starter-fullstack-angular-dotnet',
+    subtitle: '.NET 8 clean-architecture starter kit',
     description:
-      'A GPU-accelerated 2D digital twin engine for modeling patient flow through a hospital ward ' +
-      'or parts flow through a manufacturing cell. Used to test staffing and layout changes against ' +
-      'simulated demand before committing to them in the real world.',
-    technologies: ['rust', 'vulkan'],
-    links: [{ label: 'GitHub', href: 'https://github.com/dkessler-dev/simulacra', primary: true }]
+      'Production-ready Angular + .NET 8 API starter with CI/CD. Clean architecture with Domain, Application, ' +
+      'Infrastructure, and API layers, typed API contracts, and automated CI/CD pipelines.',
+    technologies: ['angular', 'dotnet', 'csharp', 'typescript', 'docker', 'github-actions'],
+    links: [{ label: 'GitHub', href: 'https://github.com/faza76/starter-fullstack-angular-dotnet', primary: true }]
   },
   {
-    slug: 'scopedb',
-    title: 'ScopeDB',
+    slug: 'halation-web-gsap-nextjs',
+    title: 'halation-web-gsap-nextjs',
     type: 'open-source',
-    href: 'https://github.com/dkessler-dev/scopedb',
-    subtitle: 'Soft real-time engine for high-frequency signal data',
+    href: 'https://github.com/faza76/halation-web-gsap-nextjs',
+    subtitle: 'Cinematic scroll-driven GSAP experience',
     description:
-      'A specialized time-series and vector database engine built for high-frequency waveform data — ' +
-      'vitals streams, vibration traces, sensor arrays — where query latency has to stay bounded even ' +
-      'as ingest rates spike.',
-    technologies: ['zig'],
-    links: [{ label: 'View Source on GitHub', href: 'https://github.com/dkessler-dev/scopedb', primary: true }]
+      'A scroll-driven cinematic web experience built with GSAP ScrollTrigger and Next.js App Router. ' +
+      'Demonstrates timeline-based animation sequences triggered by scroll position.',
+    technologies: ['nextjs', 'gsap', 'typescript', 'tailwind'],
+    links: [{ label: 'GitHub', href: 'https://github.com/faza76/halation-web-gsap-nextjs', primary: true }]
   },
   {
-    slug: 'linkfloor',
-    title: 'LinkFloor',
-    type: 'open-source',
-    href: 'https://github.com/dkessler-dev/linkfloor',
-    subtitle: 'Multiplayer incident-response training, in the browser',
-    description:
-      'A browser-based, multiplayer emergency-response drill simulator used by hospital and plant ' +
-      'safety teams to rehearse evacuations and incident response without pulling staff off the ' +
-      'floor for a real drill. Rust and C game services with WebAssembly/WebRTC clients handle dozens ' +
-      'of concurrent participants per session.',
-    technologies: ['rust', 'c', 'wasm', 'webrtc', 'svelte', 'nats jetstream', 'postgres', 'kubernetes'],
-    links: [{ label: 'View Source on GitHub', href: 'https://github.com/dkessler-dev/linkfloor', primary: true }]
-  },
-  {
-    slug: 'streamworks',
-    title: 'StreamWorks',
-    type: 'open-source',
-    href: 'https://github.com/dkessler-dev/streamworks',
-    subtitle: 'Live video syndication for telehealth and remote floors',
-    description:
-      'Distributed, fault-tolerant live stream infrastructure: resilient RTMP ingest, H.264 ' +
-      'transcoding, HLS packaging, and CDN delivery across a Rust + Kubernetes control plane. Powers ' +
-      'both telehealth video visits and remote monitoring of factory floor camera feeds.',
-    technologies: ['rust', 'ffmpeg', 'kubernetes'],
-    links: [{ label: 'View Source on GitHub', href: 'https://github.com/dkessler-dev/streamworks', primary: true }]
-  },
-  {
-    slug: 'yardpullsim',
-    title: 'YardPullSim',
-    type: 'open-source',
-    href: 'https://github.com/dkessler-dev/yardpullsim',
-    subtitle: 'Module pulling sequence optimization for container yards',
-    description:
-      'A constraint-based simulation engine that uses Google OR Tools CP-SAT solver to generate ' +
-      'optimal module-pulling sequences in container yards. Models yard layout, crane travel, and ' +
-      'precedence constraints to minimize total handling time and reduce unproductive rehandles.',
-    technologies: ['python', 'google or-tools', 'cp-sat', 'svelte'],
-    links: [{ label: 'GitHub', href: 'https://github.com/dkessler-dev/yardpullsim', primary: true }]
-  },
-  {
-    slug: 'transitarranger',
-    title: 'TransitArranger',
-    type: 'open-source',
-    href: 'https://github.com/dkessler-dev/transitarranger',
-    subtitle: 'Module staging optimization from transit area to mother container',
-    description:
-      'An optimization tool that arranges modules from a transit staging area into a mother ' +
-      'container using Google OR Tools CP-SAT. Solves a complex packing and sequencing problem ' +
-      'where module weight, arrival order, and container slot constraints must all be satisfied ' +
-      'simultaneously.',
-    technologies: ['python', 'google or-tools', 'cp-sat', 'docker'],
-    links: [{ label: 'GitHub', href: 'https://github.com/dkessler-dev/transitarranger', primary: true }]
-  },
-  {
-    slug: 'iotyardmap',
-    title: 'IoTYardMap',
-    type: 'open-source',
-    href: 'https://github.com/dkessler-dev/iotyardmap',
-    subtitle: 'Real-time container mapping with IoT sensors and live dashboard',
-    description:
-      'An IoT-powered container yard mapping system that uses BLE/UWB beacons and RFID tags to ' +
-      'track container positions in real time, with a live dashboard showing yard occupancy, ' +
-      'container movement history, and heat maps of handling activity.',
-    technologies: ['python', 'mqtt', 'influxdb', 'svelte', 'docker'],
-    links: [{ label: 'GitHub', href: 'https://github.com/dkessler-dev/iotyardmap', primary: true }]
-  },
-  {
-    slug: 'remoterounds',
-    title: 'RemoteRounds',
-    type: 'open-source',
-    href: 'https://github.com/dkessler-dev/remoterounds',
-    subtitle: 'Remote clinical rounding, transcribed and structured',
+    slug: 'natasae-studio',
+    title: 'Natasae Studio Profile',
+    type: 'client',
+    href: 'https://github.com/faza76/-Company-Profile-Natasae-Studio',
+    subtitle: 'Architecture firm company profile',
     description:
       'A proof-of-concept platform integrating real-time transcription and medically-aware NLP to ' +
       'produce structured notes from remote nursing rounds. Demonstrates an end-to-end pipeline from ' +
